@@ -18,6 +18,11 @@
                 padding: 20px;
                 margin-bottom: 10px;
             }
+
+            li > span {
+                display: inline-block;
+                width: 33.3%;
+            }
             #crypto-time > span {
                 width: 25%;
                 display: inline-block;
@@ -82,17 +87,24 @@
 
         function addCryptoDifference(crypto, price, difference) {
             let element = document.createElement("li");
-            element.innerText = `${crypto} - ${price} - ${difference}`;
 
             let nameElement = document.createElement("span");
+            nameElement.innerText = crypto;
+
             let priceElement = document.createElement("span");
+            priceElement.innerText = `$${price}`;
             let diffElement = document.createElement("span");
+            diffElement.innerText = `${difference}%`;
 
             if (difference > 0) {
                 element.classList.add("increase");
             } else if (difference < 0) {
                 element.classList.add("decrease");
             }
+
+            element.appendChild(nameElement);
+            element.appendChild(diffElement);
+            element.appendChild(priceElement);
 
             document.getElementById("crypto-list").append(element);
         }
