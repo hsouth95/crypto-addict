@@ -24,6 +24,8 @@ if (localStorage.getItem(TIME_KEY)) {
     const daysDiff = Math.floor(diff / (1000 * 60 * 60 * 24));
 
     addTimeDifference(secondsDiff, minutesDiff, hoursDiff, daysDiff);
+} else {
+    addTimeDifference(0, 0, 0, 0);
 }
 
 localStorage.setItem(TIME_KEY, currDate.toString());
@@ -34,16 +36,27 @@ fetch(ROOT_URL + PRICE_ENDPOINT + PRICE_DATA)
         console.log(data);
         if (localStorage.getItem(LOCAL_KEY)) {
             const previousValues = JSON.parse(localStorage.getItem(LOCAL_KEY));
-            for (let [crypto, price] of Object.entries(previousValues)) {
-                if (!data[crypto]) {
-                    // Crypto data is not returned
+            for (let crypto of CRYPTO_DATA) {
+                let key = crypto.id;
+                if (!previousValues[key] && !data[key]) {
+                    // Not returned from query and so don't display
                     continue;
                 }
 
-                let increase = data[crypto].usd - price.usd;
-                let difference = (increase / price.usd) * 100;
+                let increase = data[key].usd - previousValues[key].usd;
+                let difference = (increase / previousValues[key].usd) * 100;
 
-                addCryptoDifference(crypto, data[crypto].usd, difference.toFixed(2));
+                addCryptoDifference(crypto.name, data[key].usd, difference.toFixed(2));
+            }
+        } else {
+            // Add an empty difference value for first time viewing
+            for (let crypto of CRYPTO_DATA) {
+                let key = crypto.id;
+                if (!data[key]) {
+                    continue;
+                }
+
+                addCryptoDifference(crypto.name, data[key].usd, 0.0);
             }
         }
         localStorage.setItem(LOCAL_KEY, JSON.stringify(data));
