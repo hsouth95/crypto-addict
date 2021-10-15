@@ -1,24 +1,27 @@
 <html>
     <head>
+        <meta name="color-scheme" content="dark light" />
         <style>
             body {
+                color: #eee;
+                background-color: #121212;
                 padding: 50px;
             }
             #crypto-list {
             }
             #crypto-list > li {
                 list-style: none;
-                background-color: #ddd;
+                background-color: #404040;
                 border-radius: 2px;
                 padding: 20px;
                 margin-bottom: 10px;
             }
 
             .decrease {
-                background-color: #e08283 !important;
+                color: #e08283 !important;
             }
             .increase {
-                background-color: #c8f7c5 !important;
+                color: #2abb9b !important;
             }
         </style>
     </head>
@@ -53,6 +56,10 @@
         function addCryptoDifference(crypto, price, difference) {
             let element = document.createElement("li");
             element.innerText = `${crypto} - ${price} - ${difference}`;
+
+            let nameElement = document.createElement("span");
+            let priceElement = document.createElement("span");
+            let diffElement = document.createElement("span");
 
             if (difference > 0) {
                 element.classList.add("increase");
