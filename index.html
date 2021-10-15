@@ -1,5 +1,27 @@
 <html>
-    <head></head>
+    <head>
+        <style>
+            body {
+                padding: 50px;
+            }
+            #crypto-list {
+            }
+            #crypto-list > li {
+                list-style: none;
+                background-color: #ddd;
+                border-radius: 2px;
+                padding: 20px;
+                margin-bottom: 10px;
+            }
+
+            .decrease {
+                background-color: #e08283 !important;
+            }
+            .increase {
+                background-color: #c8f7c5 !important;
+            }
+        </style>
+    </head>
     <body>
         <ul id="crypto-list"></ul>
     </body>
@@ -31,6 +53,12 @@
         function addCryptoDifference(crypto, price, difference) {
             let element = document.createElement("li");
             element.innerText = `${crypto} - ${price} - ${difference}`;
+
+            if (difference > 0) {
+                element.classList.add("increase");
+            } else if (difference < 0) {
+                element.classList.add("decrease");
+            }
 
             document.getElementById("crypto-list").append(element);
         }
