@@ -8,13 +8,19 @@
                 padding: 50px;
             }
             #crypto-list {
+                padding-left: 0;
             }
+
             #crypto-list > li {
                 list-style: none;
                 background-color: #404040;
                 border-radius: 2px;
                 padding: 20px;
                 margin-bottom: 10px;
+            }
+            #crypto-time > span {
+                width: 25%;
+                display: inline-block;
             }
 
             .decrease {
@@ -26,16 +32,37 @@
         </style>
     </head>
     <body>
+        <h1>Crypto Addict</h1>
+        <h2>Since you last visited, there have been...</h2>
+        <div id="crypto-time"></div>
         <ul id="crypto-list"></ul>
     </body>
     <script>
         const LOCAL_KEY = "crypto-prices";
+        const TIME_KEY = "crypto-time";
         const CURRENCY = "usd";
         const COINS = ["bitcoin", "ethereum", "dogecoin", "binancecoin", "cardano"];
         const ROOT_URL = "https://api.coingecko.com/api/v3/";
         const PRICE_ENDPOINT = "simple/price";
 
         const PRICE_DATA = `?ids=${COINS.join(",")}&vs_currencies=${CURRENCY}`;
+
+        const currDate = new Date();
+
+        if (localStorage.getItem(TIME_KEY)) {
+            const prevDate = new Date(localStorage.getItem(TIME_KEY));
+            const diff = Math.abs(currDate - prevDate);
+
+            const secondsDiff = Math.floor(diff / 1000);
+            const minutesDiff = Math.floor(diff / (1000 * 60));
+            const hoursDiff = Math.floor(diff / (1000 * 60 * 60));
+            const daysDiff = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+            console.log(secondsDiff, minutesDiff, hoursDiff, daysDiff);
+            addTimeDifference(secondsDiff, minutesDiff, hoursDiff, daysDiff);
+        }
+
+        localStorage.setItem(TIME_KEY, currDate.toString());
 
         fetch(ROOT_URL + PRICE_ENDPOINT + PRICE_DATA)
             .then((response) => response.json())
@@ -68,6 +95,24 @@
             }
 
             document.getElementById("crypto-list").append(element);
+        }
+
+        function addTimeDifference(seconds, minutes, hours, days) {
+            let element = document.getElementById("crypto-time");
+
+            let secondsElement = document.createElement("span");
+            secondsElement.innerText = `${seconds} seconds.`;
+            let minutesElement = document.createElement("span");
+            minutesElement.innerText = `${minutes} minutes.`;
+            let hoursElement = document.createElement("span");
+            hoursElement.innerText = `${hours} hours.`;
+            let daysElement = document.createElement("span");
+            daysElement.innerText = `${days} days.`;
+
+            element.appendChild(secondsElement);
+            element.appendChild(minutesElement);
+            element.appendChild(hoursElement);
+            element.appendChild(daysElement);
         }
     </script>
 </html>
