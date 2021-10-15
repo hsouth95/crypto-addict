@@ -1,0 +1,38 @@
+<html>
+    <head></head>
+    <body>
+        <ul id="crypto-list"></ul>
+    </body>
+    <script>
+        const LOCAL_KEY = "crypto-prices";
+        const CURRENCY = "usd";
+        const COINS = ["bitcoin", "ethereum", "dogecoin"];
+        const ROOT_URL = "https://api.coingecko.com/api/v3/";
+        const PRICE_ENDPOINT = "simple/price";
+
+        const PRICE_DATA = `?ids=${COINS.join(",")}&vs_currencies=${CURRENCY}`;
+
+        fetch(ROOT_URL + PRICE_ENDPOINT + PRICE_DATA)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                if (localStorage.getItem(LOCAL_KEY)) {
+                    const previousValues = JSON.parse(localStorage.getItem(LOCAL_KEY));
+                    for (let [crypto, price] of Object.entries(previousValues)) {
+                        let increase = data[crypto].usd - price.usd;
+                        let difference = (increase / price.usd) * 100;
+                        console.log(`Difference between values for ${crypto} is ${difference.toFixed(2)}`);
+                        addCryptoDifference(crypto, difference.toFixed(2));
+                    }
+                }
+                localStorage.setItem(LOCAL_KEY, JSON.stringify(data));
+            });
+
+        function addCryptoDifference(crypto, difference) {
+            let element = document.createElement("li");
+            element.innerText = `${crypto} - ${difference}`;
+
+            document.getElementById("crypto-list").append(element);
+        }
+    </script>
+</html>
