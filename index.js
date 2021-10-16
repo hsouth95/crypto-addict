@@ -67,10 +67,12 @@ function addCryptoDifference(crypto, price, difference) {
     let element = document.createElement("li");
 
     let nameElement = document.createElement("span");
+    nameElement.classList.add("crypto-name");
+
     const iconUrlRoot = `https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.0/32/color/`;
     const iconUrl = `${iconUrlRoot}${crypto.symbol.toLowerCase()}.png`;
 
-    nameElement.innerHTML = `<img class="icon" src="${iconUrl}" onerror="this.src='generic.svg'">${crypto.name} - ${crypto.symbol}`;
+    nameElement.innerHTML = `<img class="icon" src="${iconUrl}" onerror="this.src='generic.svg'"><span>${crypto.name} - ${crypto.symbol}</span>`;
 
     let priceElement = document.createElement("span");
     priceElement.innerText = `$${price}`;
