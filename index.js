@@ -43,9 +43,12 @@ fetch(ROOT_URL + PRICE_ENDPOINT + PRICE_DATA)
                     // Not returned from query and so don't display
                     continue;
                 }
+                let difference = 0;
 
-                let increase = data[key].usd - previousValues[key].usd;
-                let difference = (increase / previousValues[key].usd) * 100;
+                if (previousValues[key]) {
+                    let increase = data[key].usd - previousValues[key].usd;
+                    difference = (increase / previousValues[key].usd) * 100;
+                }
 
                 addCryptoDifference(crypto, data[key].usd, difference.toFixed(2));
             }
