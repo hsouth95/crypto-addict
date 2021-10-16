@@ -1,6 +1,9 @@
 <html>
     <head>
+        <meta charset="UTF-8" />
         <meta name="color-scheme" content="dark light" />
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cryptocoins-icons@2.9.0/webfont/cryptocoins.css" />
         <style>
             body {
                 color: #eee;
@@ -24,6 +27,9 @@
                 display: inline-block;
                 width: 33.3%;
             }
+            #crypto-time {
+                margin-bottom: 5px;
+            }
             #crypto-time > span {
                 width: 25%;
                 display: inline-block;
@@ -35,12 +41,29 @@
             .increase {
                 color: #2abb9b !important;
             }
+            .cc {
+                margin-right: 10px;
+            }
+            .hide {
+                display: none !important;
+            }
+            #search {
+                background-color: #404040;
+                color: #eee;
+                border-color: #505050;
+            }
+            #search:visited,
+            #search:focus,
+            #search:focus-visible {
+                outline: none;
+            }
         </style>
     </head>
     <body>
         <h1>Crypto Addict</h1>
         <h2>Since you last visited, there have been...</h2>
         <div id="crypto-time"></div>
+        <input type="text" id="search" name="crypto-search" placeholder="Filter" />
         <ul id="crypto-list"></ul>
         <script src="./crypto-data.js"></script>
         <script src="./index.js"></script>

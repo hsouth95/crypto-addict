@@ -25,6 +25,7 @@ if (localStorage.getItem(TIME_KEY)) {
 
     addTimeDifference(secondsDiff, minutesDiff, hoursDiff, daysDiff);
 } else {
+    // Add a default set of values
     addTimeDifference(0, 0, 0, 0);
 }
 
@@ -46,7 +47,7 @@ fetch(ROOT_URL + PRICE_ENDPOINT + PRICE_DATA)
                 let increase = data[key].usd - previousValues[key].usd;
                 let difference = (increase / previousValues[key].usd) * 100;
 
-                addCryptoDifference(crypto.name, data[key].usd, difference.toFixed(2));
+                addCryptoDifference(crypto, data[key].usd, difference.toFixed(2));
             }
         } else {
             // Add an empty difference value for first time viewing
@@ -66,7 +67,7 @@ function addCryptoDifference(crypto, price, difference) {
     let element = document.createElement("li");
 
     let nameElement = document.createElement("span");
-    nameElement.innerText = crypto;
+    nameElement.innerHTML = `<i class="cc ${crypto.symbol}"></i>${crypto.name} - ${crypto.symbol}`;
 
     let priceElement = document.createElement("span");
     priceElement.innerText = `$${price}`;
@@ -104,3 +105,23 @@ function addTimeDifference(seconds, minutes, hours, days) {
     element.appendChild(hoursElement);
     element.appendChild(daysElement);
 }
+
+document.getElementById("search").addEventListener("input", (e) => {
+    const value = e.target.value;
+
+    if (value === "") {
+        // Remove search query
+        for (let child of document.getElementById("crypto-list").children) {
+            child.classList.remove("hide");
+        }
+        return;
+    }
+
+    for (let child of document.getElementById("crypto-list").children) {
+        const name = child.children[0].innerText;
+
+        if (!name.toUpperCase().includes(value.toUpperCase())) {
+            child.classList.add("hide");
+        }
+    }
+});
