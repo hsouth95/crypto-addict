@@ -1,15 +1,23 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <meta name="color-scheme" content="dark light" />
-
+        <meta name="color-scheme" content="dark" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cryptocoins-icons@2.9.0/webfont/cryptocoins.css" />
         <style>
             body {
                 color: #eee;
                 background-color: #121212;
                 padding: 50px;
+                padding-top: 0;
+                margin: 0;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+            header {
+                background-color: #404040;
+                margin-left: -50px;
+                margin-right: -50px;
+                padding: 20px;
+                text-align: right;
             }
             #crypto-list {
                 padding-left: 0;
@@ -28,7 +36,7 @@
                 width: 33.3%;
             }
             #crypto-time {
-                margin-bottom: 5px;
+                margin-bottom: 10px;
             }
             #crypto-time > span {
                 width: 25%;
@@ -41,7 +49,7 @@
             .increase {
                 color: #2abb9b !important;
             }
-            .cc {
+            .icon {
                 margin-right: 10px;
             }
             .hide {
@@ -51,6 +59,7 @@
                 background-color: #404040;
                 color: #eee;
                 border-color: #505050;
+                padding: 10px;
             }
             #search:visited,
             #search:focus,
@@ -58,8 +67,12 @@
                 outline: none;
             }
         </style>
+        <title>Crypto Addict - Track Crypto Price Changes</title>
     </head>
     <body>
+        <header>
+            <a href="https://github.com/hsouth95/crypto-addict"><img src="./GitHub-Mark-Light-32px.png" /></a>
+        </header>
         <h1>Crypto Addict</h1>
         <h2>Since you last visited, there have been...</h2>
         <div id="crypto-time"></div>

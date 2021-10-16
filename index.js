@@ -57,7 +57,7 @@ fetch(ROOT_URL + PRICE_ENDPOINT + PRICE_DATA)
                     continue;
                 }
 
-                addCryptoDifference(crypto.name, data[key].usd, 0.0);
+                addCryptoDifference(crypto, data[key].usd, "0.00");
             }
         }
         localStorage.setItem(LOCAL_KEY, JSON.stringify(data));
@@ -67,7 +67,10 @@ function addCryptoDifference(crypto, price, difference) {
     let element = document.createElement("li");
 
     let nameElement = document.createElement("span");
-    nameElement.innerHTML = `<i class="cc ${crypto.symbol}"></i>${crypto.name} - ${crypto.symbol}`;
+    const iconUrlRoot = `https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.0/32/color/`;
+    const iconUrl = `${iconUrlRoot}${crypto.symbol.toLowerCase()}.png`;
+
+    nameElement.innerHTML = `<img class="icon" src="${iconUrl}" onerror="this.src='generic.svg'">${crypto.name} - ${crypto.symbol}`;
 
     let priceElement = document.createElement("span");
     priceElement.innerText = `$${price}`;
@@ -92,13 +95,13 @@ function addTimeDifference(seconds, minutes, hours, days) {
     let element = document.getElementById("crypto-time");
 
     let secondsElement = document.createElement("span");
-    secondsElement.innerText = `${seconds} seconds.`;
+    secondsElement.innerText = `${seconds} second${seconds == 1 ? "" : "s"}.`;
     let minutesElement = document.createElement("span");
-    minutesElement.innerText = `${minutes} minutes.`;
+    minutesElement.innerText = `${minutes} minute${minutes == 1 ? "" : "s"}.`;
     let hoursElement = document.createElement("span");
-    hoursElement.innerText = `${hours} hours.`;
+    hoursElement.innerText = `${hours} hour${hours == 1 ? "" : "s"}.`;
     let daysElement = document.createElement("span");
-    daysElement.innerText = `${days} days.`;
+    daysElement.innerText = `${days} day${days == 1 ? "" : "s"}.`;
 
     element.appendChild(secondsElement);
     element.appendChild(minutesElement);
